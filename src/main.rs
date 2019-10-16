@@ -3,24 +3,21 @@ extern crate reqwest;
 use reqwest::Error;
 
 fn main() -> Result<(), Error> {
-
+    //Hardcoded quota string to check if we still have bits of randomness we can use 
     let quota_url = String::from("https://www.random.org/quota/?format=plain");
 
     let mut quota_response = reqwest::get(&quota_url)?;
 
+    //Move into it's own string object, and remove leading and trailing whitespace, so that parsing doesn't fail
     let mut quota_text = quota_response.text()?;
-´
+    quota_text = quota_text.trim().to_string();
+
+    //Try to parse to an int, if fails something else is wrong and we should exec further so we panic
     let quota = quota_text.parse::<i32>().unwrap();
-
-    let quota = match f {
-        Ok(i32) => i32,
-        Err(error) => {
-            panic!("Could not get quota successfully");
-        }
-    }
     
+    //println!("{}", quota_text);
 
-    println!("{}", quota_text);
+    if quota < 1613 {panic!("Not enough bits of randomness available for randomizing deck");};
 
     let request_url = format!("https://www.random.org/sequences/?min={min}&max={max}&col={colums}&format={format}&rnd={randomMethod}",
                     min = 1,
@@ -37,9 +34,7 @@ fn main() -> Result<(), Error> {
 
     let response_text : String = response.text()?;
 
-
-
-    println!("\n{}", response_text);
+    //println!("\n{}", response_text);
 
     Ok(())
 }
