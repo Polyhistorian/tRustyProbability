@@ -86,7 +86,7 @@ fn main() -> Result<(), Error> {
     };
 
     println!("Overall we did {} rounds of drawing.", finished_rounds);
-    println!("And in those rounds made {} \n", total_draws);
+    println!("And in those rounds made {} draws\n", total_draws);
 
     //Calculate average number of draws
     let total_draws_float : f64 = total_draws as f64;
