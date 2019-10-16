@@ -55,24 +55,24 @@ fn main() -> Result<(), Error> {
             cards.push(split_card_text[i].parse::<i8>().unwrap());
         }
 
-        //Init rng for shuffling all A cards back into the deck, worse rng than random.org, but using it here for saving bits on the requests 
-        //(Plus makes handling still available easier)
+        //Init rng for shuffling all aces cards back into the deck, worse rng than random.org, but using it here for saving bits on the requests 
+        //(Plus makes handling still available bits easier)
         let mut rng = thread_rng();
         
         //Loops variables to track their names
         let mut draws : i32 = 0;
-        let mut found_a_cards : i32 = 0;
+        let mut found_aces : i32 = 0;
         
-        //"Drawing" one value from the deck continuously until we reach 4 A cards
-        while found_a_cards < 4 {
+        //"Drawing" one value from the deck continuously until we reach 4 aces cards
+        while found_aces < 4 {
             draws += 1;
             let current_card = cards.pop().unwrap(); //Picks the last card from the vector, doesn't matter statistically whether we start from the beginning or end
-            if current_card <= 4 { //Matching all A cards, which have the chronological numbers 1-4
-                found_a_cards += 1;
+            if current_card <= 4 { //Matching all aces, which have the chronological numbers 1-4
+                found_aces += 1;
                 let mut index_float : f64 = rng.gen(); //Picking a random float (decimal) between 0-1
                 index_float *= cards.len().to_string().parse::<f64>().unwrap(); //Multiplying it by the current length of the vector, so that it doesn't end up outside of it
                 let index = index_float.round() as usize; 
-                cards.insert(index, current_card); //Inserting the drawn A back into the deck at a random position
+                cards.insert(index, current_card); //Inserting the drawn ace back into the deck at a random position
             }
         }
 
@@ -94,7 +94,7 @@ fn main() -> Result<(), Error> {
 
     let average_number_of_draws : f64 = total_draws_float / finished_rounds_float;
 
-    println!("So on average you need to draw {} cards to get 4 A cards with this setup.", average_number_of_draws);
+    println!("So on average you need to draw {} cards to get 4 aces cards with this setup.", average_number_of_draws);
 
     //Returning Ok, is here so that error handling otherwhere is easier
     Ok(())
