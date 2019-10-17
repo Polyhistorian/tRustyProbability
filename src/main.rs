@@ -7,18 +7,18 @@ fn main() {
     let mut total_draws : i64 = 0;
     let mut finished_rounds : i32 = 0;
 
+    //Init rng for shuffiling the first order of the deck, and for shuffling aces back into the deck
+    let mut rng = thread_rng();
+
     let mut counts_of_draws : Vec<i32> = vec![0; 49];
 
-    let mut iterations = 300000;
+    let mut iterations = 300_000;
 
     while iterations > 0 {
         iterations -= 1;
 
         //Initialize vector
         let mut cards : Vec<i8> = (1..53).collect();
-
-        //Init rng for shuffiling the first order of the deck, and for shuffling aces back into the deck
-        let mut rng = thread_rng();
 
         //Shuffle the original opsition of the deck
         cards.shuffle(&mut rng);
@@ -41,7 +41,7 @@ fn main() {
         }
 
         //Updating the overall variables, so that we can keep track of the statistics
-        total_draws += draws as i64;
+        total_draws += i64::from(draws);
         finished_rounds += 1;
         counts_of_draws[(draws-4) as usize] += 1;
 
@@ -61,14 +61,14 @@ fn main() {
 
     //Calculate average number of draws
     let total_draws_float : f64 = total_draws as f64;
-    let finished_rounds_float : f64 = finished_rounds as f64;
+    let finished_rounds_float : f64 = f64::from(finished_rounds);
 
     let average_number_of_draws : f64 = total_draws_float / finished_rounds_float;
 
     println!("So on average you need to draw {} cards to get 4 aces cards with this setup. \n", average_number_of_draws);
     
     println!("From the iterations run this time here's how many draws to get the aces and how many times they occured:");
-    for i in 0..49 {
-        println!("Draws {number_of_draws}: {occurances}", number_of_draws = (i+4), occurances = counts_of_draws[i] )
+    for (i, occurance) in counts_of_draws.iter().enumerate().take(49) {
+        println!("Draws {number_of_draws}: {occurances}", number_of_draws = (i+4), occurances = occurance )
     }
 }
