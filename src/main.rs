@@ -9,7 +9,7 @@ fn main() {
 
     let mut counts_of_draws : Vec<i32> = vec![0; 49];
 
-    let max_draws = i64::max_value() - 52; //The minus 52 making sure that we don't ever overflow.
+    let max_draws = (i32::max_value()as i64) * 8 - 52; //The minus 52 making sure that we don't ever overflow.
 
     while total_draws < max_draws {
 
