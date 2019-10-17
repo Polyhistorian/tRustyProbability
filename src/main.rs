@@ -5,14 +5,13 @@ use rand::prelude::*;
 fn main() {
 
     let mut total_draws : i64 = 0;
-    let mut finished_rounds : i32 = 0;
+    let mut finished_rounds : i64 = 0;
 
     let mut counts_of_draws : Vec<i32> = vec![0; 49];
 
-    let mut iterations = 300000;
+    let max_draws = i64::max_value() - 52; //The minus 52 making sure that we don't ever overflow.
 
-    while iterations > 0 {
-        iterations -= 1;
+    while total_draws < max_draws {
 
         //Initialize vector
         let mut cards : Vec<i8> = (1..53).collect();
@@ -50,9 +49,9 @@ fn main() {
         //println!("Rounds still left to go: {}\n", iterations);
         //Prints way too fast to be readable in this version, so disabled, you can enable them by removing the commnent ("//")
         
-        //Print current progress every thousand loops
-        if iterations % 1000 == 0 {
-            println!("Loops still to be done: {} \n", iterations);
+        //Print current progress every ten-thousand loops
+        if finished_rounds % 10000 == 0 {
+            println!("Loops done {}", finished_rounds);
         }
     };
 

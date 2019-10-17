@@ -2,7 +2,7 @@
 
 **A quick, but for myself surprisingly clean little program to answer a random question I thought up.**
 
-Branch of tRustyProbability that uses rusts own internal random functions to shuffle the deck, allowing us many more iterations since the limiting factor otherwise is the bit quota of random.org (which is reasonable). Also faster this way since we don't need to wait for the network.
+Branch of tRustyProbability, but blown way over proportionate, made to calculate until the next calculation would overflow a i64 integer. Should only be run wwith a highpower machine and built as release since it makes it about 100x as efficient, but realistically it shouldn't be run, it's made to answer an "What if?" but isn't at all necessary for anything.
 
 The question was:
 
