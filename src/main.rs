@@ -26,8 +26,10 @@ fn main() -> Result<(), Error> {
 
     if quota < 1613 {panic!("Not enough bits of randomness available for randomizing deck");};
 
-    let mut total_draws : i32 = 0;
+    let mut total_draws : i64 = 0;
     let mut finished_rounds : i32 = 0;
+
+    let mut counts_of_draws : Vec<i32> = vec![0; 49];
 
     while quota > 1613 {
         //Create url for the https request, and then send it
@@ -84,8 +86,10 @@ fn main() -> Result<(), Error> {
         }
 
         //Updating the overall variables, so that we can keep track of the statistics
-        total_draws += draws;
+        total_draws += draws as i64;
         finished_rounds += 1;
+        
+        counts_of_draws[(draws-4) as usize] += 1;
 
         //Printing the statistics out to the console
         println!("This rounds draws: {}", draws);
@@ -102,6 +106,11 @@ fn main() -> Result<(), Error> {
     let average_number_of_draws : f64 = total_draws_float / finished_rounds_float;
 
     println!("So on average you need to draw {} cards to get 4 aces cards with this setup.", average_number_of_draws);
+
+    println!("From the iterations run this time here's how many draws to get the aces and how many times they occured:");
+    for i in 0..49 {
+        println!("Draws {number_of_draws}: {occurances}", number_of_draws = (i+4), occurances = counts_of_draws[i] )
+    }
 
     //Returning Ok, is here so that error handling otherwhere is easier
     Ok(())
