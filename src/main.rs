@@ -4,10 +4,12 @@ use rand::prelude::*;
 
 fn main() {
 
-    let mut total_draws : i32 = 0;
+    let mut total_draws : i64 = 0;
     let mut finished_rounds : i32 = 0;
 
-    let mut iterations = 1000;
+    let mut counts_of_draws : Vec<i32> = vec![0; 49];
+
+    let mut iterations = 300000;
 
     while iterations > 0 {
         iterations -= 1;
@@ -39,12 +41,19 @@ fn main() {
         }
 
         //Updating the overall variables, so that we can keep track of the statistics
-        total_draws += draws;
+        total_draws += draws as i64;
         finished_rounds += 1;
+        counts_of_draws[(draws-4) as usize] += 1;
 
         //Printing the statistics out to the console
-        println!("This rounds draws: {}", draws);
-        println!("Rounds still left to go: {}\n", iterations);
+        //println!("This rounds draws: {}", draws);
+        //println!("Rounds still left to go: {}\n", iterations);
+        //Prints way too fast to be readable in this version, so disabled, you can enable them by removing the commnent ("//")
+        
+        //Print current progress every thousand loops
+        if iterations % 1000 == 0 {
+            println!("Loops still to be done: {} \n", iterations);
+        }
     };
 
     println!("Overall we did {} rounds of drawing.", finished_rounds);
@@ -56,5 +65,10 @@ fn main() {
 
     let average_number_of_draws : f64 = total_draws_float / finished_rounds_float;
 
-    println!("So on average you need to draw {} cards to get 4 aces cards with this setup.", average_number_of_draws);
+    println!("So on average you need to draw {} cards to get 4 aces cards with this setup. \n", average_number_of_draws);
+    
+    println!("From the iterations run this time here's how many draws to get the aces and how many times they occured:");
+    for i in 0..48 {
+        println!("Draws {number_of_draws}: {occurances}", number_of_draws = (i+4), occurances = counts_of_draws[i] )
+    }
 }
