@@ -2,13 +2,18 @@ extern crate reqwest;
 extern crate rand;
 
 use reqwest::Error;
+use reqwest::header::USER_AGENT;
 use rand::prelude::*;
 
 fn main() -> Result<(), Error> {
+    let client = reqwest::Client::new();
+
     //Hardcoded quota string to check if we still have bits of randomness we can use 
     let quota_url = String::from("https://www.random.org/quota/?format=plain");
 
-    let mut quota_response = reqwest::get(&quota_url)?;
+    let mut quota_response = client.get(&quota_url)
+        .header(USER_AGENT, "tRustyProbability - thefinnisharmy@gmail.com")
+        .send()?;
 
     //Move into it's own string object, and remove leading and trailing whitespace, so that parsing doesn't fail
     let mut quota_text = quota_response.text()?;
@@ -34,7 +39,9 @@ fn main() -> Result<(), Error> {
                     randomMethod = "today"     //Options are, "new" for using new bits, or date to use pregenerated randomness for that day
                     );
 
-        let mut response = reqwest::get(&request_url)?;
+        let mut response = client.get(&request_url)
+            .header(USER_AGENT, "tRustyProbability - thefinnisharmy@gmail.com")
+            .send()?;
 
         //Calculate still available quota, to check whether we can do anoter round
         quota = quota - 1612;
