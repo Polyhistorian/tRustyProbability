@@ -46,7 +46,7 @@ fn main() -> Result<(), Error> {
             .send()?;
 
         //Calculate still available quota, to check whether we can do anoter round
-        quota = quota - 1612;
+        quota -= 1612;
 
         //Move response body into its own variable
         let cards_text : String = response.text()?;
@@ -86,7 +86,7 @@ fn main() -> Result<(), Error> {
         }
 
         //Updating the overall variables, so that we can keep track of the statistics
-        total_draws += draws as i64;
+        total_draws += i64::from(draws);
         finished_rounds += 1;
         
         counts_of_draws[(draws-4) as usize] += 1;
@@ -101,15 +101,15 @@ fn main() -> Result<(), Error> {
 
     //Calculate average number of draws
     let total_draws_float : f64 = total_draws as f64;
-    let finished_rounds_float : f64 = finished_rounds as f64;
+    let finished_rounds_float : f64 = f64::from(finished_rounds);
 
     let average_number_of_draws : f64 = total_draws_float / finished_rounds_float;
 
     println!("So on average you need to draw {} cards to get 4 aces cards with this setup.", average_number_of_draws);
 
     println!("From the iterations run this time here's how many draws to get the aces and how many times they occured:");
-    for i in 0..49 {
-        println!("Draws {number_of_draws}: {occurances}", number_of_draws = (i+4), occurances = counts_of_draws[i] )
+    for (i, occurance) in counts_of_draws.iter().enumerate().take(49) {
+        println!("Draws {number_of_draws}: {occurances}", number_of_draws = (i+4), occurances = occurance )
     }
 
     //Returning Ok, is here so that error handling otherwhere is easier
