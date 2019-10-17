@@ -68,7 +68,7 @@ fn main() {
     println!("So on average you need to draw {} cards to get 4 aces cards with this setup. \n", average_number_of_draws);
     
     println!("From the iterations run this time here's how many draws to get the aces and how many times they occured:");
-    for i in 0..48 {
+    for i in 0..49 {
         println!("Draws {number_of_draws}: {occurances}", number_of_draws = (i+4), occurances = counts_of_draws[i] )
     }
 }
