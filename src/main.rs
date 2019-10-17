@@ -31,6 +31,12 @@ fn main() -> Result<(), Error> {
 
     let mut counts_of_draws : Vec<i32> = vec![0; 49];
 
+    
+
+    //Init rng for shuffling all aces cards back into the deck, worse rng than random.org, but using it here for saving bits on the requests 
+    //(Plus makes handling still available bits easier)
+    let mut rng = thread_rng();
+
     while quota > 1613 {
         //Create url for the https request, and then send it
         let request_url = format!("https://www.random.org/sequences/?min={min}&max={max}&col={colums}&format={format}&rnd={randomMethod}",
@@ -63,10 +69,6 @@ fn main() -> Result<(), Error> {
             split_card_text.push(cards_text_vector.next().unwrap());
             cards.push(split_card_text[i].parse::<i8>().unwrap());
         }
-
-        //Init rng for shuffling all aces cards back into the deck, worse rng than random.org, but using it here for saving bits on the requests 
-        //(Plus makes handling still available bits easier)
-        let mut rng = thread_rng();
         
         //Loops variables to track their names
         let mut draws : i32 = 0;
