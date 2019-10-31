@@ -35,7 +35,7 @@ fn main() {
                 found_aces += 1;
                 let mut index_float : f64 = rng.gen(); //Picking a random float (decimal) between 0-1
                 index_float *= cards.len().to_string().parse::<f64>().unwrap(); //Multiplying it by the current length of the vector, so that it doesn't end up outside of it
-                let index = index_float.round() as usize; 
+                let index = (index_float.floor() + 1f64) as usize; 
                 cards.insert(index, current_card); //Inserting the drawn ace back into the deck at a random position
             }
         }
