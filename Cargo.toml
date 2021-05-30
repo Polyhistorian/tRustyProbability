@@ -1,7 +1,7 @@
 [package]
 name = "tRustyProbability"
 version = "0.1.0"
-authors = ["TheFinnishArmy <thefinnisharmy@gmail.com>"]
+authors = ["Polyhistorian <root@csyxy.fi>"]
 edition = "2018"
 
 [dependencies]
